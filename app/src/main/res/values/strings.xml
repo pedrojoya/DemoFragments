@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">DemoFragments</string>
+    <string name="main_btnTime">Time</string>
 </resources>

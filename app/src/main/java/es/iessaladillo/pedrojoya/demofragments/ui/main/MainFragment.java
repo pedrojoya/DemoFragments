@@ -4,7 +4,6 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.TextView;
 
 import java.text.SimpleDateFormat;
@@ -19,25 +18,26 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProviders;
 import es.iessaladillo.pedrojoya.demofragments.R;
 
+@SuppressWarnings("WeakerAccess")
 public class MainFragment extends Fragment {
 
     private static final String ARG_MESSAGE = "ARG_MESSAGE";
 
-    private Button btnSaludar;
     private TextView lblMessage;
-    private SimpleDateFormat simpleDateFormat = new SimpleDateFormat("HH:mm:ss", Locale
-        .getDefault());
+    private final SimpleDateFormat simpleDateFormat = new SimpleDateFormat("HH:mm:ss",
+        Locale.getDefault());
     private MainFragmentViewModel viewModel;
 
-    public static MainFragment newInstance(String message) {
+    public MainFragment() {
+    }
+
+    @SuppressWarnings("SameParameterValue")
+    static MainFragment newInstance(String message) {
         MainFragment mainFragment = new MainFragment();
         Bundle arguments = new Bundle();
         arguments.putString(ARG_MESSAGE, message);
         mainFragment.setArguments(arguments);
         return mainFragment;
-    }
-
-    public MainFragment() {
     }
 
     @Nullable
@@ -53,20 +53,20 @@ public class MainFragment extends Fragment {
         Objects.requireNonNull(getView());
         Objects.requireNonNull(getArguments());
         Objects.requireNonNull(getArguments().getString(ARG_MESSAGE));
-        viewModel = ViewModelProviders.of(this, new MainFragmentViewModelFactory(getArguments().getString(ARG_MESSAGE))).get
-            (MainFragmentViewModel.class);
+        // Pass argument as initial value of viewModel's message.
+        viewModel = ViewModelProviders.of(this,
+            new MainFragmentViewModelFactory(getArguments().getString(ARG_MESSAGE))).get(
+            MainFragmentViewModel.class);
         setupViews(getView());
     }
 
     private void setupViews(View view) {
         lblMessage = ViewCompat.requireViewById(view, R.id.lblMessage);
-        btnSaludar = ViewCompat.requireViewById(view, R.id.btnSaludar);
         lblMessage.setText(viewModel.getMessage());
-        btnSaludar.setOnClickListener(
-            v -> {
-                viewModel.setMessage(simpleDateFormat.format(new Date()));
-                lblMessage.setText(viewModel.getMessage());
-            });
+        ViewCompat.requireViewById(view, R.id.btnTime).setOnClickListener(v -> {
+            viewModel.setMessage(simpleDateFormat.format(new Date()));
+            lblMessage.setText(viewModel.getMessage());
+        });
     }
 
 }

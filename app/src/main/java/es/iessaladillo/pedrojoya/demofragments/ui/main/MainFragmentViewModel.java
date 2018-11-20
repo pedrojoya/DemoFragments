@@ -2,11 +2,11 @@ package es.iessaladillo.pedrojoya.demofragments.ui.main;
 
 import androidx.lifecycle.ViewModel;
 
-public class MainFragmentViewModel extends ViewModel {
+class MainFragmentViewModel extends ViewModel {
 
     private String message;
 
-    public MainFragmentViewModel(String message) {
+    MainFragmentViewModel(String message) {
         this.message = message;
     }
 
